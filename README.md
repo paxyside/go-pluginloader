@@ -36,25 +36,26 @@ _Пример:_\
 Для веб-сервера так же описан тестовый запрос:\
 `go test ./api/test`
 
-##Структура проекта
-PluginsLoader
-├── api
-│   ├── server
-│   │   └── server.go
-│   └── test
-│       └── test_server.go
-├── cmd
-│   └── main.go
-├── internal
-│   ├── loader
-│   │   ├── loader.go
-│   │   └── plugin_loader.go
-│   │     
-│   └── test
-│       ├── loader_test.go
-│       └── test_plugin.go
-└── plugins
-    └── plugin1
+## Структура проекта
+
+PluginsLoader\
+├── api\
+│   ├── server\
+│   │   └── server.go\
+│   └── test\
+│       └── test_server.go\
+├── cmd\
+│   └── main.go\
+├── internal\
+│   ├── loader\
+│   │   ├── loader.go\
+│   │   └── plugin_loader.go\
+│   │     \
+│   └── test\
+│       ├── loader_test.go\
+│       └── test_plugin.go\
+└── plugins\
+    └── plugin1\
         └── plugin1.go
 
 
