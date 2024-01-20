@@ -11,7 +11,7 @@
 
 ## Запуск и установка зависимостей
 
-`git clone &&
+`git clone git@github.com:paxyside/go-pluginloader.git &&
 cd --PluginsLoader &&
 go mod download &&
 go run cmd/main.go`
@@ -24,7 +24,7 @@ go run cmd/main.go`
 
 ## Компиляция новых плагинов для их дальнейшей загрузки/выгрузки в проект
 Плагины хранятся в директории **./plugins**. Для их компиляции необходимо выполнить команду\
-`go build -o <plugin_name> -buildmode=plugin path/to/plugin`
+`go build -o <plugin_name> -buildmode=plugin path/to/plugin`\
 _Пример:_\
 `go build -o plugin1.so -buildmode=plugin plugins/plugin1/plugin1.go`  
 
