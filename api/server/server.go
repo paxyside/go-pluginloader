@@ -15,7 +15,10 @@ func init() {
 }
 
 func GetPluginsList(c *gin.Context) {
-	pluginLoader.PluginsList()
+	err := pluginLoader.PluginsList()
+	if err != nil {
+		return
+	}
 	loadedPlugins := make([]string, 0, len(pluginLoader.LoadedPlugins))
 	for name := range pluginLoader.LoadedPlugins {
 		loadedPlugins = append(loadedPlugins, name)
@@ -44,8 +47,14 @@ func PostUnloadPlugin(c *gin.Context) {
 	name := c.Query("name")
 	if name == "" {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "missing 'name' parameter"})
+		return
 	}
 
-	pluginLoader.UnloadPlugin(name)
+	err := pluginLoader.UnloadPlugin(name)
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
+		return
+	}
+
 	c.JSON(http.StatusOK, gin.H{"message": "plugin unloaded successfully"})
 }
