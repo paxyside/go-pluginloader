@@ -11,7 +11,8 @@ import (
 var pluginLoader *loader.PluginLoader
 
 func init() {
-	pluginLoader = loader.NewPluginLoader()
+	timeProvider := &loader.TimeLoad{}
+	pluginLoader = loader.NewPluginLoader(timeProvider)
 }
 
 func GetPluginsList(c *gin.Context) {
@@ -30,6 +31,7 @@ func PostLoadPlugin(c *gin.Context) {
 	path := c.Query("path")
 	if path == "" {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "missing 'path' parameter"})
+		return
 	}
 
 	err := pluginLoader.LoadPlugin(path)
@@ -39,8 +41,13 @@ func PostLoadPlugin(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"message": "plugin loaded successfully"})
+	// Получение времени загрузки плагина
+	loadTime := pluginLoader.TimeService.GetLoadTime()
 
+	c.JSON(http.StatusOK, gin.H{
+		"message":   "plugin loaded successfully",
+		"load_time": loadTime,
+	})
 }
 
 func PostUnloadPlugin(c *gin.Context) {

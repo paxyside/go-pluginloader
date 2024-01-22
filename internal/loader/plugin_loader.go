@@ -6,9 +6,10 @@ import (
 	"plugin"
 )
 
-func NewPluginLoader() *PluginLoader {
+func NewPluginLoader(timeProvider TimeProvider) *PluginLoader {
 	return &PluginLoader{
 		LoadedPlugins: make(map[string]Plugin),
+		TimeService:   timeProvider,
 	}
 }
 
@@ -44,6 +45,10 @@ func (pm *PluginLoader) LoadPlugin(path string) error {
 			log.Printf("Plugin with name '%s' already loaded\n", name)
 			return errors.New("plugin with the same name already loaded")
 		}
+
+		// Использование TimeProvider для получения времени загрузки плагина
+		loadTime := pm.TimeService.GetLoadTime()
+		log.Printf("Plugin '%s' loaded at: %s\n", name, loadTime)
 
 		pm.LoadedPlugins[name] = pluginInstance
 
